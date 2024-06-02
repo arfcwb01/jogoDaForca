@@ -20,6 +20,8 @@
         app:layout_constraintVertical_bias="0" />
 
     <EditText
+        android:inputType="text"
+        android:autofillHints="name"
         android:id="@+id/et_secreat_word"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
