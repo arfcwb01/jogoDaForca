@@ -6,14 +6,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.jogodaforca.databinding.ActivityMainBinding
+import com.example.jogodaforca.databinding.ActivityNewGameBinding
 
-class MainActivity : AppCompatActivity() {
-
+class NewGameActivity : AppCompatActivity() {
     private val binding by lazy {
-        ActivityMainBinding.inflate(layoutInflater)
+        ActivityNewGameBinding.inflate(layoutInflater)
     }
 
+    private lateinit var secreatWord: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -24,10 +24,12 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        binding.btnNewGame.setOnClickListener {
-            val intent = Intent(this@MainActivity, NewGameActivity::class.java)
+        binding.btnSecreatWord.setOnClickListener {
+            val intent = Intent(this@NewGameActivity, SecreatWordActivity::class.java)
             startActivity(intent)
         }
 
+
     }
+
 }

@@ -1,17 +1,16 @@
 package com.example.jogodaforca
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.jogodaforca.databinding.ActivityMainBinding
+import com.example.jogodaforca.databinding.ActivitySecreatWordBinding
 
-class MainActivity : AppCompatActivity() {
+class SecreatWordActivity : AppCompatActivity() {
 
-    private val binding by lazy {
-        ActivityMainBinding.inflate(layoutInflater)
+    val binding by lazy {
+        ActivitySecreatWordBinding.inflate(layoutInflater)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,11 +21,6 @@ class MainActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
-        }
-
-        binding.btnNewGame.setOnClickListener {
-            val intent = Intent(this@MainActivity, NewGameActivity::class.java)
-            startActivity(intent)
         }
 
     }

@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".SecreatWordActivity">
 
     <TextView
         style="@style/CustonFontSyle"
@@ -19,16 +19,27 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0" />
 
+    <EditText
+        android:id="@+id/et_secreat_word"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        style="@style/CustonFontSyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <Button
-        android:id="@+id/btn_new_game"
+        android:id="@+id/btn_save_secreat_word"
         style="@style/CustonButtonSyle"
         android:layout_margin="16dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        android:text="Iniciar jogo"
+        android:text="Salvar Palavra Secreta"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
