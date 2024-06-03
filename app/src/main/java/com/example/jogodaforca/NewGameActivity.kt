@@ -33,7 +33,6 @@ class NewGameActivity : AppCompatActivity() {
             startActivityForResult(intent, REQUEST_SECREAT_WORD)
         }
 
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
