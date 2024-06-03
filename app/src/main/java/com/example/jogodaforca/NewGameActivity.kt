@@ -18,6 +18,8 @@ class NewGameActivity : AppCompatActivity() {
 
     private lateinit var secreatWordFromNewWord: String
 
+    private var stateOfPlayer = StateOfPlayer.FORCA_LIMPA
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -29,9 +31,31 @@ class NewGameActivity : AppCompatActivity() {
         }
 
         binding.btnSecreatWord.setOnClickListener {
-            val intent = Intent(this@NewGameActivity, SecreatWordActivity::class.java)
-            startActivityForResult(intent, REQUEST_SECREAT_WORD)
+            //val intent = Intent(this@NewGameActivity, SecreatWordActivity::class.java)
+            //startActivityForResult(intent, REQUEST_SECREAT_WORD)
+
+            // usando o botao de nova palavra para testar as imagens
+
+            val id = when (stateOfPlayer) {
+                StateOfPlayer.FORCA_LIMPA -> R.drawable.forca_01
+                StateOfPlayer.FOCA_CABECA -> R.drawable.forca_cabeca
+                StateOfPlayer.FORCA_BRACO -> R.drawable.forma_braco_esquerdo
+                StateOfPlayer.FORCA_TRONCO -> R.drawable.forca_dois_bracos
+                StateOfPlayer.FORCA_PERNA_ESQUERDA -> R.drawable.forca_perna_esquerda
+                StateOfPlayer.FORCA_CORPO_INTEIRO -> R.drawable.forca_corpo_inteiro
+                StateOfPlayer.FORCA_MORTO -> R.drawable.forca_morto
+            }
+            binding.ivForca.setImageResource(id)
+
+            if (stateOfPlayer == StateOfPlayer.FORCA_MORTO) {
+                stateOfPlayer = StateOfPlayer.FORCA_LIMPA
+            } else {
+                stateOfPlayer = enumValues<StateOfPlayer>().get(stateOfPlayer.ordinal + 1)
+            }
+
+
         }
+
 
     }
 
@@ -40,7 +64,11 @@ class NewGameActivity : AppCompatActivity() {
         if (resultCode == RESULT_OK && requestCode == REQUEST_SECREAT_WORD && data != null) {
             data.getStringExtra(SECREAT_WORD_FROM_NEW_WORD).let {
                 secreatWordFromNewWord = (it ?: null).toString()
-                Toast.makeText(this@NewGameActivity, "new word: $secreatWordFromNewWord", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@NewGameActivity,
+                    "new word: $secreatWordFromNewWord",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
