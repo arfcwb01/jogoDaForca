@@ -20,6 +20,7 @@
         app:layout_constraintVertical_bias="0" />
 
     <EditText
+        android:digits="qwertyuiopasdfghjklzxcvbnm"
         android:inputType="text"
         android:autofillHints="name"
         android:id="@+id/et_secreat_word"
