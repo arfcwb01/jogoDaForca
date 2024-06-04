@@ -63,7 +63,7 @@ class NewGameActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK && requestCode == REQUEST_SECREAT_WORD && data != null) {
             data.getStringExtra(SECREAT_WORD_FROM_NEW_WORD).let {
-                secreatWordFromNewWord = (it ?: null).toString()
+                secreatWordFromNewWord = (it).toString()
                 Toast.makeText(
                     this@NewGameActivity,
                     "new word: $secreatWordFromNewWord",
