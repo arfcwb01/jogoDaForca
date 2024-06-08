@@ -4,6 +4,8 @@ object constants {
     const val SOLICITAR_PALAVRA_SECRETA = 1024
     const val SECREAT_WORD_FROM_NEW_WORD = "SECREAT_WORD_FROM_NEW_WORD"
     const val TESTA_LETRA = "Testar letra"
+    const val MENSAGEM_DE_VITORIA = "Parabéns \nvocê venceu!!!"
+    const val MENSAGEM_DE_DERROTA = "Você PERDEU!!!"
 }
 
 enum class StateOfPlayer(id: Int){

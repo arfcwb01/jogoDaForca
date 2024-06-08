@@ -17,12 +17,11 @@ class NewGameActivity : AppCompatActivity() {
     }
 
     private var palavraSecretaQueVeioDeDigitarPalavraSecreta = String()
-
     private var palavraResposta = StringBuilder()
-
     private var estadoDoJogador = StateOfPlayer.FORCA_LIMPA
-
     private var jogoAcontecento = false
+    private val alphabetArray: Array<String> = ('A'..'Z').map { it.toString() }.toTypedArray()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,16 +35,23 @@ class NewGameActivity : AppCompatActivity() {
 
 
         binding.btnSecreatWord.setOnClickListener {
-            if (jogoAcontecento) {
-                testaLetra()
-            } else {
-                val intent = Intent(this@NewGameActivity, SecreatWordActivity::class.java)
-                startActivityForResult(intent, SOLICITAR_PALAVRA_SECRETA)
-            }
+            val intent = Intent(this@NewGameActivity, SecreatWordActivity::class.java)
+            startActivityForResult(intent, SOLICITAR_PALAVRA_SECRETA)
         }
 
         binding.ivForca.setImageResource(getEstadoDoJogador())
 
+        binding.pcLetra.minValue = 0
+        binding.pcLetra.maxValue = 25
+        binding.pcLetra.displayedValues = alphabetArray
+        binding.pcLetra.setOnValueChangedListener { picker, oldVal, newVal ->
+            binding.btnSecreatWord.text = "Testar letra  ${alphabetArray.get(newVal)}"
+            binding.btnSecreatWord.setOnClickListener {
+                alphabetArray[newVal] = "-"
+                binding.pcLetra.value = 0
+                testaLetra()
+            }
+        }
     }
 
     fun testaLetra() {
