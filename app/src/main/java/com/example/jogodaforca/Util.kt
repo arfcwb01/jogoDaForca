@@ -6,6 +6,7 @@ object constants {
     const val TESTA_LETRA = "Testar letra"
     const val MENSAGEM_DE_VITORIA = "Parabéns \nvocê venceu!!!"
     const val MENSAGEM_DE_DERROTA = "Você PERDEU!!!"
+    const val NOVA_PALAVRA = "Digitar a Palavra Secreta"
 }
 
 enum class StateOfPlayer(id: Int){

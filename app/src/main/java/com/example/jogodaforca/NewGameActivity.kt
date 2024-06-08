@@ -2,10 +2,14 @@ package com.example.jogodaforca
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.jogodaforca.constants.MENSAGEM_DE_DERROTA
+import com.example.jogodaforca.constants.MENSAGEM_DE_VITORIA
+import com.example.jogodaforca.constants.NOVA_PALAVRA
 import com.example.jogodaforca.constants.SECREAT_WORD_FROM_NEW_WORD
 import com.example.jogodaforca.constants.SOLICITAR_PALAVRA_SECRETA
 import com.example.jogodaforca.constants.TESTA_LETRA
@@ -20,6 +24,7 @@ class NewGameActivity : AppCompatActivity() {
     private var palavraResposta = StringBuilder()
     private var estadoDoJogador = StateOfPlayer.FORCA_LIMPA
     private var jogoAcontecento = false
+    private val alphabetArrayBase: Array<String> = ('A'..'Z').map { it.toString() }.toTypedArray()
     private val alphabetArray: Array<String> = ('A'..'Z').map { it.toString() }.toTypedArray()
 
 
@@ -33,31 +38,79 @@ class NewGameActivity : AppCompatActivity() {
             insets
         }
 
+        defineBotaoParaNovaPalavra()
 
-        binding.btnSecreatWord.setOnClickListener {
-            val intent = Intent(this@NewGameActivity, SecreatWordActivity::class.java)
-            startActivityForResult(intent, SOLICITAR_PALAVRA_SECRETA)
-        }
-
+        binding.pcLetra.visibility = View.INVISIBLE
         binding.ivForca.setImageResource(getEstadoDoJogador())
 
         binding.pcLetra.minValue = 0
         binding.pcLetra.maxValue = 25
         binding.pcLetra.displayedValues = alphabetArray
         binding.pcLetra.setOnValueChangedListener { picker, oldVal, newVal ->
-            binding.btnSecreatWord.text = "Testar letra  ${alphabetArray.get(newVal)}"
+            binding.btnSecreatWord.text = "Testar letra  ${alphabetArray[newVal]}"
             binding.btnSecreatWord.setOnClickListener {
-                alphabetArray[newVal] = "-"
+                testaLetra(alphabetArray[newVal])
+
+                binding.tvUsedLetters.text =
+                    binding.tvUsedLetters.text.toString() + alphabetArray[newVal]
+
                 binding.pcLetra.value = 0
-                testaLetra()
+                alphabetArray[newVal] = "-"
             }
         }
     }
 
-    fun testaLetra() {
-        atualizaEstadoDoJogador()
+    private fun defineBotaoParaNovaPalavra() {
+        binding.btnSecreatWord.text = NOVA_PALAVRA
+        binding.btnSecreatWord.setOnClickListener {
+            val intent = Intent(this@NewGameActivity, SecreatWordActivity::class.java)
+            startActivityForResult(intent, SOLICITAR_PALAVRA_SECRETA)
+        }
+        palavraSecretaQueVeioDeDigitarPalavraSecreta = String()
+        estadoDoJogador = StateOfPlayer.FORCA_LIMPA
+        palavraResposta.clear()
         binding.ivForca.setImageResource(getEstadoDoJogador())
+        binding.tvUsedLetters.text = String()
+
+        alphabetArrayBase.forEachIndexed { index, s ->
+            alphabetArray[index] = s
+        }
+
     }
+
+    fun testaLetra(letraDeTeste: String) {
+        if (palavraSecretaQueVeioDeDigitarPalavraSecreta.contains(letraDeTeste, true)) {
+            atualizaPalavraResposta(letraDeTeste.toCharArray()[0])
+            binding.tvSecreatWord.text = palavraResposta
+        } else {
+            atualizaEstadoDoJogador()
+            binding.ivForca.setImageResource(getEstadoDoJogador())
+        }
+        analisaResultado()
+    }
+
+    private fun analisaResultado() {
+        if (!palavraResposta.contains('*')) {
+            binding.tvMensagemFimDeJogo.visibility = View.VISIBLE
+            binding.tvMensagemFimDeJogo.text = MENSAGEM_DE_VITORIA
+            binding.pcLetra.visibility = View.INVISIBLE
+            defineBotaoParaNovaPalavra()
+
+        } else if (estadoDoJogador == StateOfPlayer.FORCA_MORTO) {
+            binding.tvMensagemFimDeJogo.text = MENSAGEM_DE_DERROTA
+            binding.tvMensagemFimDeJogo.visibility = View.VISIBLE
+            binding.pcLetra.visibility = View.INVISIBLE
+            defineBotaoParaNovaPalavra()
+        }
+    }
+
+    fun atualizaPalavraResposta(char: Char) {
+        palavraSecretaQueVeioDeDigitarPalavraSecreta.forEachIndexed { index, c ->
+            if (c.equals(char, true))
+                palavraResposta[index] = char
+        }
+    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -96,6 +149,7 @@ class NewGameActivity : AppCompatActivity() {
         }
         binding.tvSecreatWord.text = palavraResposta
         binding.btnSecreatWord.text = TESTA_LETRA
+        binding.pcLetra.visibility = View.VISIBLE
         jogoAcontecento = true
     }
 }
