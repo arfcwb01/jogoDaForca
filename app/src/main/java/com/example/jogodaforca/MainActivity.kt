@@ -28,6 +28,5 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity, NewGameActivity::class.java)
             startActivity(intent)
         }
-
     }
 }

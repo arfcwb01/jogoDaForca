@@ -40,7 +40,6 @@
         android:textSize="36sp"
         android:textColor="@color/black"
         android:background="@color/yellow"
-        android:text="*******"
         android:textAlignment="center"
         android:fontFamily="@font/fonte_pirata_family"
         android:layout_width="0dp"
@@ -55,20 +54,12 @@
         android:textSize="24sp"
         android:textColor="@color/black"
         android:background="@color/yellow"
-        android:text="abcdefghijklmnopqrstuvxv"
         android:textAlignment="center"
         android:fontFamily="@font/fonte_pirata_family"
         android:layout_width="0dp"
         android:lines="2"
         android:layout_height="wrap_content"/>
 
-    <Spinner
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_used_letters"
-        app:layout_constraintBottom_toTopOf="@+id/btn_secreat_word"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
 
     <Button
         android:id="@+id/btn_secreat_word"

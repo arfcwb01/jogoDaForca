@@ -2,13 +2,13 @@ package com.example.jogodaforca
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.jogodaforca.constants.REQUEST_SECREAT_WORD
 import com.example.jogodaforca.constants.SECREAT_WORD_FROM_NEW_WORD
+import com.example.jogodaforca.constants.SOLICITAR_PALAVRA_SECRETA
+import com.example.jogodaforca.constants.TESTA_LETRA
 import com.example.jogodaforca.databinding.ActivityNewGameBinding
 
 class NewGameActivity : AppCompatActivity() {
@@ -16,9 +16,13 @@ class NewGameActivity : AppCompatActivity() {
         ActivityNewGameBinding.inflate(layoutInflater)
     }
 
-    private lateinit var secreatWordFromNewWord: String
+    private var palavraSecretaQueVeioDeDigitarPalavraSecreta = String()
 
-    private var stateOfPlayer = StateOfPlayer.FORCA_LIMPA
+    private var palavraResposta = StringBuilder()
+
+    private var estadoDoJogador = StateOfPlayer.FORCA_LIMPA
+
+    private var jogoAcontecento = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,46 +34,62 @@ class NewGameActivity : AppCompatActivity() {
             insets
         }
 
+
         binding.btnSecreatWord.setOnClickListener {
-            //val intent = Intent(this@NewGameActivity, SecreatWordActivity::class.java)
-            //startActivityForResult(intent, REQUEST_SECREAT_WORD)
-
-            // usando o botao de nova palavra para testar as imagens
-
-            val id = when (stateOfPlayer) {
-                StateOfPlayer.FORCA_LIMPA -> R.drawable.forca_01
-                StateOfPlayer.FOCA_CABECA -> R.drawable.forca_cabeca
-                StateOfPlayer.FORCA_BRACO -> R.drawable.forma_braco_esquerdo
-                StateOfPlayer.FORCA_TRONCO -> R.drawable.forca_dois_bracos
-                StateOfPlayer.FORCA_PERNA_ESQUERDA -> R.drawable.forca_perna_esquerda
-                StateOfPlayer.FORCA_CORPO_INTEIRO -> R.drawable.forca_corpo_inteiro
-                StateOfPlayer.FORCA_MORTO -> R.drawable.forca_morto
-            }
-            binding.ivForca.setImageResource(id)
-
-            if (stateOfPlayer == StateOfPlayer.FORCA_MORTO) {
-                stateOfPlayer = StateOfPlayer.FORCA_LIMPA
+            if (jogoAcontecento) {
+                testaLetra()
             } else {
-                stateOfPlayer = enumValues<StateOfPlayer>().get(stateOfPlayer.ordinal + 1)
+                val intent = Intent(this@NewGameActivity, SecreatWordActivity::class.java)
+                startActivityForResult(intent, SOLICITAR_PALAVRA_SECRETA)
             }
-
-
         }
 
+        binding.ivForca.setImageResource(getEstadoDoJogador())
 
+    }
+
+    fun testaLetra() {
+        atualizaEstadoDoJogador()
+        binding.ivForca.setImageResource(getEstadoDoJogador())
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK && requestCode == REQUEST_SECREAT_WORD && data != null) {
+        if (resultCode == RESULT_OK && requestCode == SOLICITAR_PALAVRA_SECRETA && data != null) {
             data.getStringExtra(SECREAT_WORD_FROM_NEW_WORD).let {
-                secreatWordFromNewWord = (it).toString()
-                Toast.makeText(
-                    this@NewGameActivity,
-                    "new word: $secreatWordFromNewWord",
-                    Toast.LENGTH_SHORT
-                ).show()
+                palavraSecretaQueVeioDeDigitarPalavraSecreta = (it).toString()
+                preparaJogo()
             }
         }
+    }
+
+    fun atualizaEstadoDoJogador() {
+        if (estadoDoJogador == StateOfPlayer.FORCA_MORTO) {
+            estadoDoJogador = StateOfPlayer.FORCA_LIMPA
+        } else {
+            estadoDoJogador = enumValues<StateOfPlayer>().get(estadoDoJogador.ordinal + 1)
+        }
+    }
+
+    fun getEstadoDoJogador(): Int {
+        return when (estadoDoJogador) {
+            StateOfPlayer.FORCA_LIMPA -> R.drawable.forca_01
+            StateOfPlayer.FOCA_CABECA -> R.drawable.forca_cabeca
+            StateOfPlayer.FORCA_BRACO -> R.drawable.forma_braco_esquerdo
+            StateOfPlayer.FORCA_TRONCO -> R.drawable.forca_dois_bracos
+            StateOfPlayer.FORCA_PERNA_ESQUERDA -> R.drawable.forca_perna_esquerda
+            StateOfPlayer.FORCA_CORPO_INTEIRO -> R.drawable.forca_corpo_inteiro
+            StateOfPlayer.FORCA_MORTO -> R.drawable.forca_morto
+        }
+    }
+
+    fun preparaJogo() {
+        palavraResposta.clear()
+        palavraSecretaQueVeioDeDigitarPalavraSecreta.forEach {
+            palavraResposta.append("*")
+        }
+        binding.tvSecreatWord.text = palavraResposta
+        binding.btnSecreatWord.text = TESTA_LETRA
+        jogoAcontecento = true
     }
 }

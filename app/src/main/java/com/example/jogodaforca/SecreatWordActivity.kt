@@ -28,7 +28,7 @@ class SecreatWordActivity : AppCompatActivity() {
         }
 
         binding.run {
-            etSecreatWord.addTextChangedListener(object : TextWatcher {
+            /*etSecreatWord.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(
                     s: CharSequence?,
                     start: Int,
@@ -39,13 +39,13 @@ class SecreatWordActivity : AppCompatActivity() {
                 }
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    btnSaveSecreatWord.isEnabled = count >= 5
+                    btnSaveSecreatWord.isEnabled = count >= 2
                 }
 
                 override fun afterTextChanged(s: Editable?) {
                 }
 
-            })
+            })*/
 
             btnSaveSecreatWord.setOnClickListener {
                 etSecreatWord.text.toString().trim()
