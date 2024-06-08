@@ -25,66 +25,69 @@
         android:layout_width="250dp"
         android:layout_height="350dp"
         android:src="@drawable/forca_corpo_inteiro"
-        app:layout_constraintVertical_bias="0"
         app:layout_constraintBottom_toTopOf="@+id/btn_secreat_word"
         app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintVertical_bias="0" />
 
     <TextView
         android:id="@+id/tv_secreat_word"
-        android:layout_margin="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/iv_forca"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textSize="36sp"
-        android:textColor="@color/black"
-        android:background="@color/yellow"
-        android:textAlignment="center"
-        android:fontFamily="@font/fonte_pirata_family"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@color/yellow"
+        android:fontFamily="@font/fonte_pirata_family"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_forca" />
 
     <TextView
         android:id="@+id/tv_used_letters"
-        android:layout_margin="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/tv_secreat_word"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textSize="24sp"
-        android:textColor="@color/black"
-        android:background="@color/yellow"
-        android:textAlignment="center"
-        android:fontFamily="@font/fonte_pirata_family"
         android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@color/yellow"
+        android:fontFamily="@font/fonte_pirata_family"
         android:lines="2"
-        android:layout_height="wrap_content"/>
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_secreat_word" />
+
     <NumberPicker
         android:id="@+id/pc_letra"
         style="@style/Widget.AppCompat.Spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:spinnerMode="dropdown"
-        app:layout_constraintBottom_toTopOf="@+id/btn_secreat_word"
+        android:layout_marginEnd="24dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_used_letters" />
+        app:layout_constraintTop_toTopOf="@+id/iv_forca"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_forca"/>
 
     <TextView
         android:id="@+id/tv_mensagem_fim_de_jogo"
         style="@style/CustonFontSyle"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:text="Parabéns \nvocê venceu!!!"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="Parabéns \nvocê venceu!!!"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btn_secreat_word"
-        style="@style/CustonButtonSyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
